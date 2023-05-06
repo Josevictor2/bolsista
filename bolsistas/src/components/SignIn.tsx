@@ -6,9 +6,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, setDoc,serverTimestamp } from "firebase/firestore";
 
 
-
-
-
 const SignIn = () => {
     const [user] = useAuthState(auth); 
    
