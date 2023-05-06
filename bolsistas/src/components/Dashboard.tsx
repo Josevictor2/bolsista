@@ -10,11 +10,15 @@ const Dashboard = () =>
     const [user] = useAuthState(auth);
 
     type user = {
-        name: string;
+        firstname: string;
+        lastname: string;
         email: string;
-        photoURL: string;
-        uid: string;
+        password: string;
+        phone : string;
         lastSeen: string;
+        matricula: string;
+        curso: string;
+        token: string;
     };
 
     type ColumnDef<T extends object> = {
@@ -25,48 +29,56 @@ const Dashboard = () =>
     const columns: ColumnDef<user>[] = useMemo(
         () => [
             {
-                Header: "Name",
-                accessor: "name",
+                Header: "Nome",
+                accessor: "firstname",
             },
             {
                 Header: "Email",
                 accessor: "email",
             },
             {
-                Header: "Photo",
-                accessor: "photoURL",
+                Header: "Matricula",
+                accessor: "matricula",
             },
             {
-                Header: "Uid",
-                accessor: "uid",
+                Header: "Curso",
+                accessor: "curso",
             },
             {
-                Header: "LastSeen",
+                Header: "Telefone",
+                accessor: "phone",
+            },
+            {
+                Header: "Ultimo acesso",
                 accessor: "lastSeen",
             },
+           
+
         ],
         []
     );
 
     type data = {
-        name: string;
+        firstname: string;
+        lastname: string;
         email: string;
-        photoURL: string;
-        uid: string;
+        password: string;
+        phone : string;
         lastSeen: string;
+        matricula: string;
+        curso: string;
+        token: string;
     }
 
     const [data, setData] = useState<data[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
+        const unsubscribe = onSnapshot(collection(db, "bolsistas"), (snapshot) => {
             const users: data[] = snapshot.docs.map((doc) => ({
-                name: doc.data().name,
-                email: doc.data().email,
-                photoURL: doc.data().photoURL,
-                uid: doc.data().uid,
-                lastSeen: new Date(doc.data().lastSeen.seconds * 1000).toString(),
+                ...doc.data(),
+                
+                
             }));
             setData(users);
             setLoading(false);

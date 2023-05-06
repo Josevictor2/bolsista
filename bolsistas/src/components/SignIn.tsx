@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth, db } from "../../config.js";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, setDoc,serverTimestamp } from "firebase/firestore";
 
@@ -43,8 +43,11 @@ const SignIn = () => {
             });
     };
         
+    const navigate = useNavigate();
+    const directUser = () => navigate('/dashboard');
+    console.log(isSignedIn)
     if (isSignedIn) {
-        return <Navigate to="/Dashboard" />;
+        directUser();
     }
 
     return (
